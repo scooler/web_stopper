@@ -3,12 +3,15 @@ class WS.Time extends Backbone.Model
     started: false
     startMs: 0
     secondsPassed: 0
+    secondsPassedEarlier: 0
 
   start: ->
     return if @get("started")
     @set({
       started: true
       startMs: new Date().getTime()
+      secondsPassedEarlier: @get("secondsPassed") + @get("secondsPassedEarlier")
+      secondsPassed: 0
       },
       {silence: true}
     )
@@ -33,10 +36,13 @@ class WS.Time extends Backbone.Model
     @set(secondsPassed: secondsPassed+1)
 
   seconds: ->
-    @get("secondsPassed")%60
+    @allSeconds()%60
 
   minutes: ->
-    Math.floor((@get("secondsPassed")%3600)/60)
+    Math.floor((@allSeconds()%3600)/60)
 
   hours: ->
-    Math.floor(@get("secondsPassed")/3600)
+    Math.floor(@allSeconds()/3600)
+
+  allSeconds: ->
+    @get("secondsPassed")+@get("secondsPassedEarlier")
