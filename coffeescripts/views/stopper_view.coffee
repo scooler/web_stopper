@@ -10,6 +10,7 @@ class WS.StopperView extends Backbone.View
   initialize: ->
     @model = new WS.Time
     @model.on "change", @updateClock, this
+    @title = $("title").html()
 
   render: ->
     $(@el).append @template()
@@ -18,10 +19,16 @@ class WS.StopperView extends Backbone.View
   start: (e) ->
     e.preventDefault()
     @model.start()
+    @setTitle("[+]#{@title}")
+    
 
   stop: (e) ->
     e.preventDefault()
     @model.stop()
+    @setTitle(@title)
+
+  setTitle: (title) ->
+    $("title").html(title)
 
   updateClock: ->
     @updateSeconds()
