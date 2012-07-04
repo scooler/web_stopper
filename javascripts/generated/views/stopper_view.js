@@ -21,7 +21,8 @@
 
     StopperView.prototype.initialize = function() {
       this.model = new WS.Time;
-      return this.model.on("change", this.updateClock, this);
+      this.model.on("change", this.updateClock, this);
+      return this.title = $("title").html();
     };
 
     StopperView.prototype.render = function() {
@@ -31,12 +32,18 @@
 
     StopperView.prototype.start = function(e) {
       e.preventDefault();
-      return this.model.start();
+      this.model.start();
+      return this.setTitle("[+]" + this.title);
     };
 
     StopperView.prototype.stop = function(e) {
       e.preventDefault();
-      return this.model.stop();
+      this.model.stop();
+      return this.setTitle(this.title);
+    };
+
+    StopperView.prototype.setTitle = function(title) {
+      return $("title").html(title);
     };
 
     StopperView.prototype.updateClock = function() {
