@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require "fileutils"
+require "coffee-script"
+
+FileUtils.rmdir "javascripts/generated"
+
+Dir['coffeescripts/**/*.coffee'].each do |file_name| 
+  new_file_name = file_name.gsub(/\.coffee$/, ".js").gsub(/^coffeescripts/, "javascripts/generated")
+  compiled_coffee = CoffeeScript.compile(File.read(file_name))
+  FileUtils.mkdir_p(File.dirname(new_file_name))
+  File.write( new_file_name, compiled_coffee)
+end
