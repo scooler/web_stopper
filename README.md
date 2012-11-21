@@ -1,4 +1,4 @@
 web_stopper
 ===========
 
-Simple stopper in backbone.js
+Simple stopper in backbone.js :)
